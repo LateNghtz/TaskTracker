@@ -1,7 +1,28 @@
 const fs = require('fs');
-
-// Define the path for the JSON file
 const filePath = 'Data/Data.json';
+const data = {
+    "currentId": 0,
+    "tasks": []
+};
+
+function init() {
+    fs.mkdir('Data', { recursive: true }, (err) => {
+        if (err) {
+            console.error('Error creating Data directory:', err);
+        } else {
+            console.log('Data directory created successfully.');
+        }
+    });
+    const jsonData = JSON.stringify(data, null, 2);
+    fs.writeFile('Data/data.json', jsonData, (err) => {
+        if (err) {
+            console.error('Error writing to file', err);
+        } else {
+            console.log('Data written to file successfully!');
+        }
+    }); 
+}
+
 
 // Function to load tasks and currentId from the JSON file
 function loadTasks() {
@@ -33,6 +54,13 @@ function addTask(title) {
   console.log(`Task added: ${task.title}`);
 }
 
+
+
+
+
+
+//Main
+
 // Access command line arguments
 const args = process.argv.slice(2);  // Remove the first two elements (node and script path)
 const command = args[0]; // First argument is the command for exampe "add"
@@ -45,5 +73,9 @@ switch (command) {
         } else {
             console.log('Please provide a task title.');
         }
+        break;
+
+    case 'init':
+        init();
         break;
 } 
