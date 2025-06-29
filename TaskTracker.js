@@ -54,8 +54,41 @@ function addTask(title) {
   console.log(`Task added: ${task.title}`);
 }
 
+function deleteTaskById(id) {
+  // Read the JSON data from the file
+  fs.readFile(filePath, 'utf8', (err, data) => {
+    if (err) {
+      console.error('Error reading the file:', err);
+      return;
+    }
 
+    // Parse the JSON data
+    let jsonData;
+    try {
+      jsonData = JSON.parse(data);
+    } catch (e) {
+      console.error('Error parsing JSON:', e);
+      return;
+    }
 
+    // Filter out the task with the specified ID
+    const originalLength = jsonData.tasks.length;
+    jsonData.tasks = jsonData.tasks.filter(task => task.id !== Number(id));
+
+    // If the task was deleted, update the file
+    if (jsonData.tasks.length < originalLength) {
+      fs.writeFile(filePath, JSON.stringify(jsonData, null, 2), (err) => {
+        if (err) {
+          console.error('Error writing the file:', err);
+        } else {
+          console.log('Task deleted successfully!');
+        }
+      });
+    } else {
+      console.log('Task with the specified ID not found.');
+    }
+  });
+}
 
 
 
@@ -78,4 +111,12 @@ switch (command) {
     case 'init':
         init();
         break;
-} 
+    
+    case 'delete':
+        if (args[1]) {
+            deleteTaskById(args[1]);
+        } else {
+            console.log('Please provide a task ID to delete.');
+        }
+        break;
+}
