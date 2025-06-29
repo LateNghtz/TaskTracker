@@ -1,0 +1,21 @@
+{
+  "name": "tasktracker",
+  "version": "1.0.0",
+  "main": "TaskTracker.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node TaskTracker.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LateNghtz/TaskTracker.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/LateNghtz/TaskTracker/issues"
+  },
+  "homepage": "https://github.com/LateNghtz/TaskTracker#readme",
+  "description": ""
+}
