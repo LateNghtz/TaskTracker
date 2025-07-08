@@ -90,6 +90,36 @@ function deleteTaskById(id) {
   });
 }
 
+function listAllTasks() {
+  // Read the JSON data
+  fs.readFile(filePath, 'utf8', (err, data) => {
+    if (err) {
+      console.error('Error reading the file:', err);
+      return;
+    }
+
+    // Parse the JSON data
+    let jsonData;
+    try {
+      jsonData = JSON.parse(data);
+    } catch (e) {
+      console.error('Error parsing JSON:', e);
+      return;
+    }
+
+    // List all tasks
+    if (jsonData.tasks.length === 0) {
+      console.log('No tasks found.');
+    } else {
+      jsonData.tasks.forEach(task => {
+        let length = (`ID: ${task.id} | Title: ${task.title} | Completed: ${task.completed}`).length
+        console.log(`ID: ${task.id} | Title: ${task.title} | Completed: ${task.completed}`);
+        console.log('-'.repeat(length));
+      });
+    }
+  });
+
+}
 
 
 //Main
@@ -118,5 +148,9 @@ switch (command) {
         } else {
             console.log('Please provide a task ID to delete.');
         }
+        break;
+
+    case 'list':
+        listAllTasks();
         break;
 }
